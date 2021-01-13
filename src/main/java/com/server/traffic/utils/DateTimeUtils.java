@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -77,7 +78,7 @@ public class DateTimeUtils {
     }
 
     /**
-     * compareDateTimeNow : compare date vs date now
+     * compareAfterDateTimeNow : compare date after vs date now
      *
      * @param date : date for compare
      * @return Boolean
@@ -88,6 +89,51 @@ public class DateTimeUtils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * equalsDateTimeNow
+     *
+     * @param date
+     * @return
+     */
+    public static Boolean equalsDateTimeNow(Date date) {
+        Date dateNow = new Date(System.currentTimeMillis());
+        date.getTime();
+        dateNow.getTime();
+        if (date.equals(dateNow)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * compareBeforeDateTimeNow : compare date before vs date now
+     *
+     * @param date : date for compare
+     * @return Boolean
+     */
+    public static Boolean compareBeforeDateTimeNow(Date date) {
+        Date dateNow = new Date(System.currentTimeMillis());
+        if (date.before(dateNow)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * minusDayAndDateTimeNow : minus date in database vs date now
+     *
+     * @param date : date in database
+     * @return Long {java.lang.Long}
+     */
+    public static Long minusDayAndDateTimeNow(Date date) {
+        Date dateNow = new Date(System.currentTimeMillis());
+        Calendar calendarDateEnd = Calendar.getInstance();
+        Calendar calendarDateNow = Calendar.getInstance();
+        calendarDateEnd.setTime(date);
+        calendarDateNow.setTime(dateNow);
+        return (calendarDateEnd.getTime().getTime() - calendarDateNow.getTime().getTime()) / (24 * 3600 * 1000) + 2;
     }
 
 }
